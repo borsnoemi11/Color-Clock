@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by borsnoemi11 (http://jsbin.com/hucarop/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+<meta name="description" content="Color Clock">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+	<link href="https://fonts.googleapis.com/css?family=Sahitya" rel="stylesheet">
+  <title>Color Clock</title>
+<style id="jsbin-css">
+* { 
+	margin: 0; 
+	padding: 0; 
+} /*minden elem margója és paddingje 0, de a saját kódunk előtt kell ideírni, hogy azokat ne nullázza le*/
+
+html, body {
+  height: 100%;
+}
+
+#clock {
+	font-family: 'Sahitya', serif;
+	font-size: 70px;
+	margin-top: -70px;
+  text-align: center;
+  position: relative;
+  top: 50%;
+}
+
+
+</style>
+</head>
+<body>
+	<div id="clock">12:13:14</div>
+<script id="jsbin-javascript">
+function timeCheck(time){
+	if(time<10) time = '0' + time;
+	return time;
+}
+function toHex(time){
+	if(time>255) time = 255;
+	if(time<16) return '0' + time.toString(16);
+	else	return time.toString(16);
+}
+function colorClock(){
+	
+	var date = new Date();
+	var hours = date.getHours();
+	var mins = date.getMinutes();
+	var secs = date.getSeconds();
+	
+	var clockFace = timeCheck(hours) + ':' + timeCheck(mins) + ':' + timeCheck(secs);
+	document.getElementById('clock').innerHTML = clockFace;
+	
+	/*---- coloring ----*/
+	var hexRed;
+	var hexGreen;
+	var hexBlue;
+	
+	if(mins % 6 == 0)/*red to yellow*/{
+		hexRed = 240;
+		hexGreen = secs * 4;
+		hexBlue = 0;
+	} else if (mins % 6 == 1)/*yellow to green*/{
+		hexRed = 240 - secs * 4;
+		hexGreen = 240;
+		hexBlue = 0;
+	} else if (mins % 6 == 2)/*green to cyan*/{
+		hexRed = 0;
+		hexGreen = 240;
+		hexBlue = secs * 4;
+	} else if (mins % 6 == 3)/*cyan to blue*/{
+		hexRed = 0;
+		hexGreen = 240 - secs * 4;
+		hexBlue = 240;
+	} else if (mins % 6 == 4)/*blue to  magenta*/{
+		hexRed = secs * 4;
+		hexGreen = 0;
+		hexBlue = 240;
+	} else /*magenta to red*/{
+		hexRed = 240;
+		hexGreen = 0;
+		hexBlue = 240 - secs * 4;
+	}
+	 
+	var hexColor = '#' + toHex(hexRed) + toHex(hexGreen) + toHex(hexBlue);
+	console.log(hexColor);
+	
+	document.body.style.background = hexColor;
+	
+	setTimeout(function() {
+    colorClock();
+  }, 1000);	
+}
+colorClock();
+</script>
+</body>
+</html>
