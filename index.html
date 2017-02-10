@@ -19,7 +19,7 @@ Released under the MIT license: http://jsbin.mit-license.org
 * { 
 	margin: 0; 
 	padding: 0; 
-} /*minden elem margója és paddingje 0, de a saját kódunk előtt kell ideírni, hogy azokat ne nullázza le*/
+}
 
 html, body {
   height: 100%;
@@ -45,7 +45,6 @@ function timeCheck(time){
 	return time;
 }
 function toHex(time){
-	if(time>255) time = 255;
 	if(time<16) return '0' + time.toString(16);
 	else	return time.toString(16);
 }
